@@ -1,35 +1,25 @@
 from fastapi import FastAPI
 import joblib
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # Load the XGBoost pipeline model
 model = joblib.load("xgboost_ecommerce_pipeline.pkl")
 
 app = FastAPI(title="E-commerce ML API", version="1.0")
 
-# 1. Country mapping dictionary used during training
 COUNTRY_MAPPING = {
-    "Bahrain": 0,
-    "Macao": 1,
-    "Malta": 2,
-    "Lebanon": 3,
-    "Costa Rica": 4,
-    "Mongolia": 5,
-    "Dominican Republic": 6,
-    "Kazakhstan": 7,
-    "Georgia": 8,
-    "Nigeria": 9
+    "Bahrain": 0, "Macao": 1, "Malta": 2, "Lebanon": 3, "Costa Rica": 4,
+    "Mongolia": 5, "Dominican Republic": 6, "Kazakhstan": 7, "Georgia": 8, "Nigeria": 9
 }
 
-# 2. Update input data structure to accept the country name as a string
 class EcommerceData(BaseModel):
-    count_view_item: int
-    count_add_to_cart: int
-    count_begin_checkout: int
-    device_category: str
-    traffic_medium: str
-    country: str  # <--- Now accepts the country name directly!
+    count_view_item: int = Field(..., example=5, description="Number of items viewed by the user")
+    count_add_to_cart: int = Field(..., example=2, description="Number of items added to the cart")
+    count_begin_checkout: int = Field(..., example=1, description="Number of times checkout process was initiated")
+    device_category: str = Field(..., example="mobile", description="Device type: 'mobile', 'desktop', or 'tablet'")
+    traffic_medium: str = Field(..., example="organic", description="Traffic source medium: 'organic', 'cpc', 'referral', etc.")
+    country: str = Field(..., example="Bahrain", description=f"Country of origin. Accepted values: {list(COUNTRY_MAPPING.keys())}")
 
 @app.get("/")
 def home():
@@ -37,18 +27,17 @@ def home():
 
 @app.post("/predict")
 def predict(data: EcommerceData):
-    # 3. Convert the country name to its encoded integer value
-    # If the country is unknown, default to 0 (or handle the error)
+    # Convert the country name to its encoded integer value
     encoded_country = COUNTRY_MAPPING.get(data.country, 0)
     
-    # 4. Prepare the DataFrame with the exact column names expected by the model
+    # Prepare the DataFrame
     input_data = pd.DataFrame([{
         "count_view_item": data.count_view_item,
         "count_add_to_cart": data.count_add_to_cart,
         "count_begin_checkout": data.count_begin_checkout,
         "device_category": data.device_category,
         "traffic_medium": data.traffic_medium,
-        "country_encoded": encoded_country  # <--- Injected here for the model
+        "country_encoded": encoded_country 
     }])
     
     # Perform prediction
