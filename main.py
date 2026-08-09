@@ -111,4 +111,4 @@ def predict(data: EcommerceData):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Internal inference error: {str(e)}"
         )
-    }
+    
