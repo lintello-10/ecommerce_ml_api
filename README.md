@@ -18,7 +18,7 @@
 
 ## 🚀 Live Demos & Documentation
 * **🔗 [Test the Live API Documentation (Swagger UI)](https://ecommerce-ml-api-gqub.onrender.com/docs#/Predictions/predict_predict_post)**
-* **🌐 [Access the Live Streamlit Frontend App](https://YOUR_STREAMLIT_APP_URL_HERE)**
+* **🌐 [Access the Live Streamlit Frontend App](https://ecommercemlapi-nb2638m2scw3u8ztmtts4q.streamlit.app/)**
 
 ---
 
