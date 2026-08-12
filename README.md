@@ -3,12 +3,13 @@
 # 🛒 E-Commerce Conversion Prediction API & MLOps Architecture
 
 **A production-ready MLOps web service predicting real-time user purchase intent, backed by a decoupled Streamlit frontend.**  
-*Built with FastAPI, XGBoost, Docker, Streamlit, and modern deployment practices.*
+*Built with FastAPI, XGBoost, Docker, Streamlit, Pytest, GitHub Actions, and modern deployment practices.*
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://YOUR_STREAMLIT_APP_URL_HERE)
 [![XGBoost](https://img.shields.io/badge/XGBoost-Pipeline-FF9900?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
 [![Docker](https://img.shields.io/badge/Containerized-Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![CI Pipeline](https://github.com/lintello-10/ecommerce_ml_api/actions/workflows/ci.yml/badge.svg)](https://github.com/lintello-10/ecommerce_ml_api/actions)
 [![Render](https://img.shields.io/badge/Status-Live%20on%20Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://ecommerce-ml-api-gqub.onrender.com/docs)
 
 </div>
@@ -23,13 +24,14 @@
 ---
 
 ## 📌 Project Overview
-In modern e-commerce, accurately predicting whether a browsing session will result in a purchase allows platforms to optimize real-time engagement. This project covers the **complete end-to-end MLOps lifecycle**—from raw data transformation and pipeline training to a secure production API, containerization, and a decoupled user interface.
+In modern e-commerce, accurately predicting whether a browsing session will result in a purchase allows platforms to optimize real-time engagement. This project covers the **complete end-to-end MLOps lifecycle**—from raw data transformation and pipeline training to automated quality assurance (CI/CD), a secure production API, containerization, and a decoupled user interface.
 
 ### 🏛️ Architecture Evolution: V1 vs V2
 * **Version 1 (Monolithic Approach):** In the previous iteration, the Streamlit application directly loaded the heavy machine learning model (`.pkl`) into its own local memory to perform predictions. While functional for local testing, it tightly couples the frontend interface with computation logic.
 * **Version 2 (Decoupled MLOps Approach - Current):** The architecture has been re-engineered into a professional client-server model. The ML model is wrapped inside a secure **FastAPI** service, containerized via **Docker**, and deployed on **Render**. The new **Streamlit frontend (`app.py`)** acts strictly as a lightweight user interface that communicates with the cloud backend in real-time via HTTP requests (`requests.post`), ensuring scalability and clean separation of concerns.
 
 ### ✨ Key Features
+* **Automated CI/CD Pipeline**: Integrated with GitHub Actions to automatically run unit tests (`pytest`) upon every push, ensuring software reliability and non-regression.
 * **ML Pipeline Integration**: Leverages a serialized **Scikit-Learn / XGBoost Pipeline** to guarantee consistency between training and inference features.
 * **Strict Input Validation**: Uses Pydantic to enforce data contracts (e.g., preventing negative interaction counts via `ge=0` and validating allowed countries).
 * **Decoupled Frontend**: Interactive Streamlit dashboard interacting remotely with the cloud API.
@@ -44,6 +46,7 @@ In modern e-commerce, accurately predicting whether a browsing session will resu
 * **API Framework:** FastAPI, Uvicorn
 * **Frontend UI:** Streamlit, Requests
 * **Machine Learning:** XGBoost, Scikit-Learn, Pandas, Joblib
+* **Testing & CI/CD:** Pytest, GitHub Actions
 * **MLOps & DevOps:** Docker, Git/GitHub, Render
 
 ---
@@ -53,8 +56,13 @@ In modern e-commerce, accurately predicting whether a browsing session will resu
 ```text
 ecommerce_ml_project/
 │
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # GitHub Actions automated CI/CD pipeline workflow configuration
+│
 ├── api/                             # Backend MLOps service
 │   ├── main.py                      # FastAPI application endpoints and prediction logic
+│   ├── test_main.py               # Unit tests suite for API endpoints validation (pytest)
 │   ├── xgboost_ecommerce_pipeline.pkl # Serialized trained machine learning pipeline
 │   ├── requirements.txt             # API python dependencies
 │   ├── Dockerfile                   # Instructions for building the Docker container image
