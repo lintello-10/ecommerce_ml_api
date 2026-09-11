@@ -1,12 +1,10 @@
 <div align="center">
 
-# E-Commerce Purchase Prediction API
+# 🔌 E-Commerce Purchase Prediction API
 
 ### Version 2 — A decoupled FastAPI and Streamlit application
 
-Predict whether an e-commerce session is likely to result in a purchase by sending
-behavioral and contextual features to a FastAPI backend powered by a serialized
-XGBoost pipeline.
+**Predict whether an e-commerce session is likely to result in a purchase by sending behavioral and contextual features to a FastAPI backend powered by a serialized XGBoost pipeline.**
 
 <p>
   <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"></a>
@@ -15,40 +13,61 @@ XGBoost pipeline.
   <a href="https://github.com/lintello-10/ecommerce_ml_api/actions/workflows/ci.yml"><img src="https://github.com/lintello-10/ecommerce_ml_api/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
 </p>
 
+**[🚀 Live Demo](https://ecommercemlapi-nb2638m2scw3u8ztmtts4q.streamlit.app/) • [🏗️ Architecture](#-architecture) • [⚙️ Getting Started](#-getting-started) • [📡 API Usage](#-api-usage)**
+
 </div>
 
 ---
 
-## Overview
+<details>
+<summary>📚 Full Table of Contents</summary>
 
-This project is the **second version of an e-commerce conversion prediction
-application**. It keeps the prediction objective of the first version while
-separating the user interface from the inference service:
+- [Overview](#-overview)
+- [Live Resources](#-live-resources)
+- [Architecture](#-architecture)
+- [Features](#-features)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Running the Streamlit Interface](#-running-the-streamlit-interface)
+- [API Usage](#-api-usage)
+- [Testing](#-testing)
+- [Deployment Note](#-deployment-note)
+- [Author](#-author)
 
-- **Version 1:** the application interface and model inference were handled in
-  the same Streamlit application.
-- **Version 2 (this repository):** the model is exposed through a FastAPI
-  service, while Streamlit acts as a client that sends HTTP requests to the API.
+</details>
 
-The repository contains the API, the Streamlit interface, the trained model
-artifact, automated tests, and the Docker configuration needed to run the
-backend locally.
+---
 
-## Live resources
+## 📌 Overview
 
-The deployed services are available here:
+This project is the **second version of an e-commerce conversion prediction application**. It keeps the prediction objective of the first version while separating the user interface from the inference service:
 
-- **FastAPI Swagger UI:** <https://ecommerce-ml-api-gqub.onrender.com/docs>
-- **Streamlit application:** <https://ecommercemlapi-nb2638m2scw3u8ztmtts4q.streamlit.app/>
+| Version | Description |
+|---|---|
+| **Version 1** | The application interface and model inference were handled in the same Streamlit application. |
+| **Version 2 (this repository)** | The model is exposed through a FastAPI service, while Streamlit acts as a client that sends HTTP requests to the API. |
 
-The API is hosted on a free cloud instance and may need approximately
-50 seconds to wake up after a period of inactivity.
+The repository contains the API, the Streamlit interface, the trained model artifact, automated tests, and the Docker configuration needed to run the backend locally.
 
-> **Scope note:** This repository does not contain an MLflow tracking or model
-> registry implementation. The model used at inference time is the committed
-> `xgboost_ecommerce_pipeline.pkl` artifact.
+---
 
-## Architecture
+## 🚀 Live Resources
+
+| Service | URL |
+|---|---|
+| **FastAPI Swagger UI** | <https://ecommerce-ml-api-gqub.onrender.com/docs> |
+| **Streamlit application** | <https://ecommercemlapi-nb2638m2scw3u8ztmtts4q.streamlit.app/> |
+
+> [!WARNING]
+> The API is hosted on a free cloud instance and may need approximately 50 seconds to wake up after a period of inactivity.
+
+> [!NOTE]
+> **Scope note:** This repository does not contain an MLflow tracking or model registry implementation. The model used at inference time is the committed `xgboost_ecommerce_pipeline.pkl` artifact.
+
+---
+
+## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
@@ -61,12 +80,11 @@ flowchart LR
     R --> S
 ```
 
-The FastAPI service validates the request with Pydantic, encodes the country
-feature, prepares a pandas `DataFrame`, and calls the serialized pipeline for
-the prediction and probability. The Streamlit application displays the result
-and reports the API connection status.
+The FastAPI service validates the request with Pydantic, encodes the country feature, prepares a pandas `DataFrame`, and calls the serialized pipeline for the prediction and probability. The Streamlit application displays the result and reports the API connection status.
 
-## Features
+---
+
+## ✨ Features
 
 - FastAPI endpoints for status, health, and purchase-intent prediction.
 - Pydantic validation for non-negative interaction counts.
@@ -74,23 +92,25 @@ and reports the API connection status.
 - XGBoost/scikit-learn pipeline loaded with Joblib.
 - Streamlit form for entering session features and calling the API.
 - Dockerfile and Docker Compose configuration for local API execution.
-- Pytest tests covering the root endpoint, health check, valid prediction, and
-  invalid country handling.
-- GitHub Actions workflow that installs dependencies and runs `pytest` on pushes
-  and pull requests targeting `main` or `master`.
+- Pytest tests covering the root endpoint, health check, valid prediction, and invalid country handling.
+- GitHub Actions workflow that installs dependencies and runs `pytest` on pushes and pull requests targeting `main` or `master`.
 
-## Technology Stack
+---
+
+## 🧰 Technology Stack
 
 | Area | Technologies used |
 | --- | --- |
-| API | Python, FastAPI, Uvicorn, Pydantic |
-| Machine learning | XGBoost, scikit-learn, pandas, Joblib |
-| User interface | Streamlit, Requests |
-| Testing | Pytest, FastAPI TestClient |
-| Packaging and local deployment | Docker, Docker Compose |
-| Continuous integration | GitHub Actions |
+| 🔌 API | Python, FastAPI, Uvicorn, Pydantic |
+| 🤖 Machine learning | XGBoost, scikit-learn, pandas, Joblib |
+| 🖥️ User interface | Streamlit, Requests |
+| 🧪 Testing | Pytest, FastAPI TestClient |
+| 🐳 Packaging and local deployment | Docker, Docker Compose |
+| 🔄 Continuous integration | GitHub Actions |
 
-## Project Structure
+---
+
+## 📂 Project Structure
 
 ```text
 .
@@ -108,7 +128,9 @@ and reports the API connection status.
 └── README.md
 ```
 
-## Running the API locally
+---
+
+## ⚙️ Getting Started
 
 ### Prerequisites
 
@@ -161,35 +183,34 @@ The API is then available at:
 docker compose up --build
 ```
 
-The Compose configuration exposes the API on port `8000` and starts Uvicorn
-with reload enabled for local development. Stop the service with:
+The Compose configuration exposes the API on port `8000` and starts Uvicorn with reload enabled for local development. Stop the service with:
 
 ```bash
 docker compose down
 ```
 
-## Running the Streamlit interface
+---
 
-The Streamlit application is a separate client. Start the API first, then
-install Streamlit and Requests if they are not already available in your
-environment:
+## ▶️ Running the Streamlit Interface
+
+The Streamlit application is a separate client. Start the API first, then install Streamlit and Requests if they are not already available in your environment:
 
 ```bash
 pip install streamlit requests
 streamlit run app.py
 ```
 
-When the interface opens, enter the URL of the FastAPI service in the sidebar.
-For a local API, use:
+When the interface opens, enter the URL of the FastAPI service in the sidebar. For a local API, use:
 
 ```text
 http://localhost:8000
 ```
 
-The interface calls `/health` to display the connection status and `/predict`
-when the prediction form is submitted.
+The interface calls `/health` to display the connection status and `/predict` when the prediction form is submitted.
 
-## API usage
+---
+
+## 📡 API Usage
 
 ### Prediction request
 
@@ -216,12 +237,17 @@ Example response shape:
 }
 ```
 
-The `country` value must be one of the countries defined in
-`COUNTRY_MAPPING` in `main.py`. The interaction counts must be greater than or
-equal to zero. Invalid countries return HTTP `400`; inference failures return
-HTTP `500`.
+The `country` value must be one of the countries defined in `COUNTRY_MAPPING` in `main.py`. The interaction counts must be greater than or equal to zero. Invalid countries return HTTP `400`; inference failures return HTTP `500`.
 
-## Testing
+| Status | Meaning |
+|---|---|
+| `200` | Successful prediction |
+| `400` | Invalid country value |
+| `500` | Inference failure |
+
+---
+
+## 🧪 Testing
 
 Run the automated test suite from the project root:
 
@@ -229,21 +255,26 @@ Run the automated test suite from the project root:
 pytest
 ```
 
-The same test command is executed by the GitHub Actions workflow defined in
-`.github/workflows/ci.yml`.
+The same test command is executed by the GitHub Actions workflow defined in `.github/workflows/ci.yml`.
 
-## Deployment note
+---
 
-The API can be deployed as a Docker-based service on a compatible hosting
-platform. The Streamlit interface can be deployed separately and configured
-with the public API base URL. The current application is designed as a simple
-client-server prediction system; it does not include authentication, a
-database, scheduled retraining, experiment tracking, or model monitoring.
+## 🚢 Deployment Note
 
-## Author
+The API can be deployed as a Docker-based service on a compatible hosting platform. The Streamlit interface can be deployed separately and configured with the public API base URL.
+
+> [!IMPORTANT]
+> The current application is designed as a simple client-server prediction system. It does not include:
+> - authentication
+> - a database
+> - scheduled retraining
+> - experiment tracking
+> - model monitoring
+
+---
+
+## 👤 Author
 
 **Dramé Bourama**
 
-L3 Mathematics and Computer Science student | Aspiring Data Scientist and
-MLOps Engineer
-
+L3 Mathematics and Computer Science student | Aspiring Data Scientist and MLOps Engineer
