@@ -52,12 +52,23 @@ The repository contains the API, the Streamlit interface, the trained model arti
 
 ---
 
+<a id="live-resources"></a>
 ## 🚀 Live Resources
 
 | Service | URL |
 |---|---|
 | **FastAPI Swagger UI** | <https://ecommerce-ml-api-gqub.onrender.com/docs> |
 | **Streamlit application** | <https://ecommercemlapi-nb2638m2scw3u8ztmtts4q.streamlit.app/> |
+
+<br>
+
+<div align="center">
+
+<img src="Screenshot 2026-11-04 211225.png" alt="E-Commerce Streamlit App Interface Preview" width="100%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+
+</div>
+
+<br>
 
 > [!WARNING]
 > The API is hosted on a free cloud instance and may need approximately 50 seconds to wake up after a period of inactivity.
